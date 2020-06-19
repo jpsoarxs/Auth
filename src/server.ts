@@ -5,6 +5,8 @@ import path from 'path'
 
 const app = express();
 
+const port = process.env.PORT || 3000
+
 // GET: Buscar uma ou mais informações do back-end
 // POST: Criar uma nova informação no back-end
 // PUT: Atualizar uma informação no back-end
@@ -19,4 +21,4 @@ app.use(routes);
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
 
-app.listen(3333);
+app.listen(port);

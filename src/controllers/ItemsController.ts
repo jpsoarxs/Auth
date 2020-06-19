@@ -4,16 +4,43 @@ import knex from '../database/connection'
 class ItemsController {
   async index(req: Request, res: Response) {
 
-    const items = await knex('items').select('*');
-    const serializedItems = items.map(item => {
-      return { 
-        id: item.id,
-        title: item.title,
-        image_url: `http://localhost:3333/uploads/${item.image}`
-      }
+    return res.status(200).json({
+      message: 'Usando o GET dentro da rota de projetos'
+    });
+
+  }
+
+  async create(req: Request, res: Response) {
+
+    const { 
+      name, description, banner_url, thumbnail_url, preview_url,
+      regular_price, extended_price, version, browser, compatibility,
+      files, tags
+    } = req.body
+
+    return res.status(200).json({
+      name,
+      description,
+      banner_url,
+      thumbnail_url,
+      preview_url,
+      regular_price,
+      extended_price,
+      version,
+      browser,
+      compatibility,
+      files,
+      tags
     })
 
-    return res.json(serializedItems);
+  }
+
+  async show(req: Request, res: Response) {
+    const { id } = req.params
+
+    return res.status(200).json({
+      message: `Usando o GET com parametro ${id}`
+    })
 
   }
 }
