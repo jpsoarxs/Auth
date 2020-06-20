@@ -12,26 +12,24 @@ class ItemsController {
 
   async create(req: Request, res: Response) {
 
-    const { 
-      name, description, banner_url, thumbnail_url, preview_url,
-      regular_price, extended_price, version, browser, compatibility,
-      files, tags
-    } = req.body
+    interface Item {
+      name: String, 
+      description: String, 
+      banner_url: String, 
+      thumbnail_url: String, 
+      preview_url: String,
+      regular_price: Number, 
+      extended_price: Number, 
+      version: String, 
+      browser: Number[], 
+      compatibility: Number[],
+      files: Number[], 
+      tags: String[]
+    }
 
-    return res.status(200).json({
-      name,
-      description,
-      banner_url,
-      thumbnail_url,
-      preview_url,
-      regular_price,
-      extended_price,
-      version,
-      browser,
-      compatibility,
-      files,
-      tags
-    })
+    const item = <Item>req.body
+
+    return res.status(200).json(item)
 
   }
 
