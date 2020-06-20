@@ -1,6 +1,7 @@
 import express from 'express'
 import { Request, Response } from 'express'
 import morgan from 'morgan'
+import bodyParser from 'body-parser'
 
 import ItemsController from './controllers/ItemsController'
 import CartController from './controllers/CartController'
@@ -11,6 +12,8 @@ const itemController = new ItemsController();
 const cartController = new CartController();
 
 routes.use(morgan('dev'))
+routes.use(bodyParser.urlencoded({ extended: false }))
+routes.use(bodyParser.json())
 
 // Item routes
 routes.get('/items', itemController.index)
@@ -22,7 +25,7 @@ routes.get('/carts', cartController.index)
 routes.get('/carts/:id', cartController.show)
 routes.post('/carts', cartController.create)
 
-routes.use((req: Request, res: Response, next) => {
+routes.use((req:Request, res:Response, next) => {
 
   const erro = new Error('Route not found')
   erro.status = 404
