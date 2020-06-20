@@ -1,8 +1,9 @@
 import express from 'express'
+import { Request, Response } from 'express'
 import morgan from 'morgan'
 
-import ItemsController from './controllers/itemsController'
-import CartController from './controllers/cartController'
+import ItemsController from './controllers/ItemsController'
+import CartController from './controllers/CartController'
 
 const routes = express.Router();
 
@@ -20,5 +21,28 @@ routes.post('/items', itemController.create)
 routes.get('/carts', cartController.index)
 routes.get('/carts/:id', cartController.show)
 routes.post('/carts', cartController.create)
+
+routes.use((req: Request, res: Response, next) => {
+
+  const erro = new Error('Route not found')
+  erro.status = 404
+  next(erro)
+
+})
+
+interface ErrorObject {
+  status: number,
+  message: string
+}
+
+routes.use((error:ErrorObject, req:Request, res:Response, next) => {
+  res.status(error.status || 500)
+  return res.send({
+    error: {
+      message: error.message
+    }
+  })
+})
+
 
 export default routes;
